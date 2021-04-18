@@ -24,7 +24,6 @@ namespace HeapValidator
         {
             bool minHeap = false;
             bool maxHeap = false;
-            bool invalid = false;
 
             int smallest = HeapArray.Min();
             int largest = HeapArray.Max();
@@ -38,19 +37,37 @@ namespace HeapValidator
             {
                 maxHeap = true;
             }
-            else
-            {
-                invalid = true;
-            }
 
             //Now we check to make sure each element in the array is valid for the type of heap it is
-            if (minHeap)
+            if (minHeap) //Validate min heap
             {
-
+                for (int i = 0; i < HeapArray.Length; i++)
+                {
+                    if (HeapArray[2 * i + 1] < HeapArray[i])
+                    {
+                        return false;
+                    }
+                    if (2 * i + 2 < HeapArray.Length && HeapArray[2 * i + 2] > HeapArray[i])
+                    {
+                        return false;
+                    }
+                }
+                return true;
             }
-            else if (maxHeap)
+            else if (maxHeap) //Validate max heap
             {
-
+                for (int i = 0; i < HeapArray.Length; i++)
+                {
+                    if ((2 * i + 1 < HeapArray.Length) && (HeapArray[i] < HeapArray[i * 2 + 1]))
+                    {
+                        return false;
+                    }
+                    if ((2 * i + 2 < HeapArray.Length) && (HeapArray[i] < HeapArray[i * 2 + 2]))
+                    {
+                        return false;
+                    }
+                }
+                return true;
             }
             else
             {
